@@ -1,0 +1,7 @@
+---
+title: Weather Module
+icon: news
+vendor: modolabs
+dataSourceModels:
+-   KGONewsDataModel
+...

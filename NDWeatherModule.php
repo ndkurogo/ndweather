@@ -1,25 +1,23 @@
 <?php 
-class WeatherWebModule extends WebModule
+class NDWeatherModule extends KGOModule
 {
-    public $id='weather';
-    protected $imageurl = "";
-    protected function initializeForPage() {
-        //$this->assign('message', 'Hello World!');
-        $args = array(  'BASE_URL' => 'http://xml.weather.yahoo.com/forecastrss/46556_f.xml',
-                        'CACHE_LIFETIME' => 0,
-                    );
-        $retriever = DataRetriever::factory("URLDataRetriever", $args);
-        $data = $retriever->getData();
-        $this->assign('weatherData', $data);
 
-        $parser = DataParser::factory("SimpleXMLDataParser", null);
+    protected function initializeForPage_index(KGOUIPage $page) {
+        
+        $args = array(  'baseURL' => 'http://xml.weather.yahoo.com/forecastrss/46556_f.xml',
+                    );
+        $retriever = KGODataRetriever::factory("KGOURLDataRetriever", $args);
+        $data = $retriever->getData();
+        //$this->assign('weatherData', $data);
+
+        $parser = KGODataParser::factory("KGOSimpleXMLDataParser", null);
         $parsed = $parser->parseData($data);
         $item = $parsed['channel']['item'];
-        //var_dump($item);
+        var_dump($item);
         //$item->assign('forecasts', $item['yweather:forecast']);
         $today = $item['yweather:condition']['@attributes'];
         $todayTitle = sprintf("%d Degrees and %s", $today['temp'], $today['text']);
-        $this->assign('today', $todayTitle);
+        //$this->assign('today', $todayTitle);
 
         //this->assign('radarImg', '<img src=\"http://radar.weather.gov/ridge/RadarImg/N0R/IWX_N0R_0.gif\"></img>');
         
@@ -38,7 +36,9 @@ class WeatherWebModule extends WebModule
             $forecasts[$i] = $term;
         }
 
-        $this->assign('forecasts', $forecasts);
+        //$this->assign('forecasts', $forecasts);
+        print_r($forecasts);
         //var_dump($forecasts);
+        
     }
 }

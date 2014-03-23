@@ -1,0 +1,10 @@
+---
+common:
+    pages:
+        index:
+            pageTitle: Local Weather
+            pullToRefresh: true
+            objdefs:
+                content: page-index.objdefs.content.default
+    options: {}
+...
